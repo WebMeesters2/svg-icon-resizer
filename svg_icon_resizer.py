@@ -12,7 +12,7 @@ import subprocess
 import sys
 import xml.etree.ElementTree as ET
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 
 class ResizeError(RuntimeError):

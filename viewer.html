@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SVG Icon Resizer Viewer</title>
+  <link rel="stylesheet" href="viewer.css">
+</head>
+<body>
+  <header class="toolbar">
+    <div>
+      <p class="eyebrow">SVG ICON RESIZER</p>
+      <h1>Page boundary viewer</h1>
+    </div>
+
+    <div class="toolbar-actions">
+      <label class="folder-button" for="folder-input">Choose icons folder</label>
+      <input id="folder-input" type="file" accept=".svg,image/svg+xml" webkitdirectory multiple>
+
+      <fieldset class="background-picker">
+        <legend>Canvas</legend>
+        <button class="theme-button active" type="button" data-theme="checker">Grid</button>
+        <button class="theme-button" type="button" data-theme="light">Light</button>
+        <button class="theme-button" type="button" data-theme="dark">Dark</button>
+      </fieldset>
+
+      <label class="zoom-control" for="zoom">
+        Preview size
+        <input id="zoom" type="range" min="240" max="760" step="20" value="520">
+      </label>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <aside class="sidebar" aria-label="Icon files">
+      <div class="sidebar-heading">
+        <strong>Icons</strong>
+        <span id="icon-count">0</span>
+      </div>
+      <label class="search-label" for="search">Filter icons</label>
+      <input id="search" class="search" type="search" placeholder="Type a filename…" disabled>
+      <ol id="icon-list" class="icon-list"></ol>
+    </aside>
+
+    <section class="comparison" aria-live="polite">
+      <div id="empty-state" class="empty-state">
+        <div class="empty-mark" aria-hidden="true">□</div>
+        <h2>Select your <code>icons</code> folder</h2>
+        <p>The viewer pairs each source SVG with the same filename under <code>icons/square/</code>.</p>
+        <label class="folder-button secondary" for="folder-input">Browse for folder</label>
+      </div>
+
+      <div id="viewer" class="viewer" hidden>
+        <div class="viewer-heading">
+          <div>
+            <p class="eyebrow">CURRENT ICON</p>
+            <h2 id="current-name"></h2>
+          </div>
+          <div class="navigation">
+            <button id="previous" type="button" aria-label="Previous icon">←</button>
+            <span id="position"></span>
+            <button id="next" type="button" aria-label="Next icon">→</button>
+          </div>
+        </div>
+
+        <div class="previews">
+          <article class="preview-card">
+            <div class="card-heading">
+              <div>
+                <span class="kind">Source</span>
+                <h3>Original page</h3>
+              </div>
+              <span id="source-status" class="status"></span>
+            </div>
+            <div class="stage">
+              <div id="source-page" class="page">
+                <img id="source-image" alt="Original SVG preview">
+                <span class="page-label">SVG page</span>
+              </div>
+            </div>
+            <dl id="source-metadata" class="metadata"></dl>
+          </article>
+
+          <article class="preview-card">
+            <div class="card-heading">
+              <div>
+                <span class="kind accent">Square</span>
+                <h3>Converted page</h3>
+              </div>
+              <span id="square-status" class="status"></span>
+            </div>
+            <div class="stage">
+              <div id="square-page" class="page">
+                <img id="square-image" alt="Square SVG preview">
+                <span class="page-label">SVG page</span>
+              </div>
+            </div>
+            <dl id="square-metadata" class="metadata"></dl>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="viewer.js"></script>
+</body>
+</html>

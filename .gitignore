@@ -34,3 +34,5 @@ Thumbs.db
 
 # Local source and generated icons (may contain third-party artwork)
 test-icons/
+/icons/*.svg
+/icons/square/*.svg

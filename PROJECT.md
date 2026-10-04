@@ -32,7 +32,8 @@ Do this programmatically, preferably using Bash + Graphicsmagick, but I heard th
 
 ## Architecture
 
-- Main entry point: `svg_icon_resizer.py`
+- Main entry point: `svg_icon_resizer.py`; `convert-all-icons.sh` is the fault-tolerant batch wrapper.
+- Local visual inspection: `viewer.html`, `viewer.css`, and `viewer.js` provide a dependency-free browser comparison of source and square SVG pages.
 - Important data/config files: none; configuration is supplied through CLI options.
 - Runtime boundary: Python invokes GraphicsMagick to render and measure visible bounds, maps those pixels to the source `viewBox`, then rewrites only the SVG root viewport.
 
@@ -40,7 +41,7 @@ Do this programmatically, preferably using Bash + Graphicsmagick, but I heard th
 
 - Primary user documentation: `README.md`
 - Technical/project documentation: `PROJECT.md`
-- Examples/templates: usage examples in `README.md`
+- Examples/templates: usage and viewer instructions in `README.md`
 - Protected examples/templates that must not be changed: none documented
 
 ## Development Workflow
@@ -55,7 +56,7 @@ Do this programmatically, preferably using Bash + Graphicsmagick, but I heard th
 
 - Syntax/compile check: `python3 -m compileall .`
 - Test command: `python3 -m unittest discover`
-- Lint/typecheck command: none documented
+- Lint/typecheck command: `node --check viewer.js` for browser JavaScript syntax
 - Other project-specific checks: run the CLI against a representative SVG when GraphicsMagick is available.
 
 ## Release Process
@@ -70,9 +71,11 @@ Do this programmatically, preferably using Bash + Graphicsmagick, but I heard th
 - Use GraphicsMagick only to measure a temporary rendering, never to write the output SVG.
 - Inputs must define a `viewBox` so raster measurements map back to SVG coordinates.
 - Input and output paths must differ.
+- `convert-all-icons.sh` reads `icons/*.svg`, writes `icons/square/*.svg`, and attempts every input before reporting aggregate failure.
+- The browser viewer must remain usable from `file://` without a build step, web server, or external assets.
 - Preserve aspect ratio and the complete drawing even when the configured minimum height ratio is geometrically impossible.
 
 ## Open Questions
 
-- Whether future releases need a graphical interface or native batch mode.
+- Whether future releases need a graphical interface.
 - Whether padding should eventually support a unit other than a fraction of the longest drawing dimension.
